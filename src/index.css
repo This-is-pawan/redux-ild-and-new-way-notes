@@ -1,3 +1,44 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.counter{
+ width: 50vw;
+margin: auto;
+text-align: center;
+}
+
+.btn{
+ width: 200px;
+ padding: 5px;
+ border: none;
+ border-radius: 5px;
+ text-transform: capitalize;
+ font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+ letter-spacing: 2px;
+ cursor: pointer;
+ transition: all 1s ease;
+}
+.btn:hover{
+ background-color: wheat;
+}
+.cardshow{
+ display: flex;
+ justify-content: center;
+ margin: 1rem;
+}
+.model{
+ width: 50vw;
+ margin: auto;
+ box-shadow: 2px 2px 5px pink;
+ padding: 1rem;
+ border-radius: 1rem;
+}
+.card{
+ width: 80%;
+ text-transform: capitalize;
+ margin: auto;
+text-align: center;
+font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+letter-spacing: 2px;
+}
+.img{
+ width: 100%;
+ object-fit: cover;
+}

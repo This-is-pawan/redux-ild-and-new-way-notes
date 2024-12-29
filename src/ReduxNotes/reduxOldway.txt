@@ -1,0 +1,101 @@
+
+    IT IS OLD WAY TO WRITE THE REDUX CODE 
+     
+    npm install create-redux react-redux
+
+ 
+
+STEP:1] firstly we define Action (it's like machine handle) 
+e.g export const increament='INCREMENT'
+e.g export const decrement='DECREMENT'
+(it is not necessary can we write in upper & lower-case but mostly good conventional write in uppercase )
+STEP:2 ] second // actions.js
+import { INCREMENT, DECREMENT } from './actionTypes';
+
+export const increment = () => ({
+  type: INCREMENT,
+});
+
+export const decrement = () => ({
+  type: DECREMENT,
+});
+STEP:3 ] Create Reducer (it's like machine what will make product)
+e.g
+
+import { INCREMENT, DECREMENT } from './actionTypes';
+
+const initialState = {
+  count: 0,
+};
+
+const counterReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case INCREMENT:
+      return { ...state, count: state.count + 1 };
+    case DECREMENT:
+      return { ...state, count: state.count - 1 };
+    default:
+      return state;
+  }
+};
+
+export default counterReducer;
+
+STEP:4 ]
+ we will make the  store
+import { createStore } from 'redux';
+import counterReducer from './reducer';
+
+const store = createStore(counterReducer);
+
+export default store;
+ 
+STEP:5 ]
+ connect react component
+import React from 'react';
+import { connect } from 'react-redux';
+import { increment, decrement } from './actions';
+
+const Counter = ({ count, increment, decrement }) => {
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+    </div>
+  );
+};
+
+// Map state to props
+const mapStateToProps = (state) => ({
+  count: state.count,
+});
+
+// Map dispatch to props
+const mapDispatchToProps = {
+  increment,
+  decrement,
+};
+
+// Connect component to Redux
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+
+STEP:6 ] 
+
+App.js
+// index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import store from './store';
+import Counter from './Counter';
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
+ //IT IS OLD WAY TO WRITE THE REDUX CODE END 
+
+
