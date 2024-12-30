@@ -1,0 +1,136 @@
+
+// actions.js
+export const INCREMENT = 'INCREMENT';
+export const DECREMENT = 'DECREMENT';
+
+export const increment = () => ({ type: INCREMENT });
+export const decrement = () => ({ type: DECREMENT });
+Create Reducer
+Write a reducer to handle state changes.
+
+// reducer.js
+import { INCREMENT, DECREMENT } from './actions';
+
+const initialState = { count: 0 };
+
+const counterReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case INCREMENT:
+      return { ...state, count: state.count + 1 };
+    case DECREMENT:
+      return { ...state, count: state.count - 1 };
+    default:
+      return state;
+  }
+};
+
+export default counterReducer;
+Set Up Store
+Create the Redux store with the reducer.
+
+// store.js
+import { createStore } from 'redux';
+import counterReducer from './reducer';
+
+const store = createStore(counterReducer);
+
+export default store;
+Connect UI
+Use react-redux to connect components to the store.
+
+// Counter.js
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement } from './actions';
+
+const Counter = () => {
+  const count = useSelector((state) => state.count);
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={() => dispatch(increment())}>Increment</button>
+      <button onClick={() => dispatch(decrement())}>Decrement</button>
+    </div>
+  );
+};
+
+export default Counter;
+New Way Using Redux Toolkit (3 Steps)
+Create Slice
+Define the state, actions, and reducer in a single slice.
+
+// counterSlice.js
+import { createSlice } from '@reduxjs/toolkit';
+
+const counterSlice = createSlice({
+  name: 'counter',
+  initialState: { count: 0 },
+  reducers: {
+    increment: (state) => {
+      state.count += 1;
+    },
+    decrement: (state) => {
+      state.count -= 1;
+    },
+  },
+});
+
+export const { increment, decrement } = counterSlice.actions;
+export default counterSlice.reducer;
+Set Up Store
+Use the configureStore function.
+
+// store.js
+import { configureStore } from '@reduxjs/toolkit';
+import counterReducer from './counterSlice';
+
+const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+  },
+});
+
+export default store;
+Connect UI
+Use react-redux with the new slice.
+
+// Counter.js
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement } from './counterSlice';
+
+const Counter = () => {
+  const count = useSelector((state) => state.counter.count);
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={() => dispatch(increment())}>Increment</button>
+      <button onClick={() => dispatch(decrement())}>Decrement</button>
+    </div>
+  );
+};
+
+export default Counter;
+Key Differences
+Old Redux	Redux Toolkit
+Actions, reducers, and store are separate.	Combines them in slices.
+Requires boilerplate code.	Reduces boilerplate.
+Manual immutability handling.	Built-in immutability with Immer.
+Both methods connect to the UI similarly using react-redux's hooks (useSelector and useDispatch). The new Redux Toolkit simplifies the process significantly, making it faster and easier to set up.
+
+
+
+
+
+
+
+
+
+
+
+
+
